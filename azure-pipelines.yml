@@ -26,10 +26,7 @@ steps:
   inputs:
     containerRegistry: 'DockerHub'
     command: 'login'
-
-- steps: List the Docker Images
-  displayName: Docker Images Listing
-  - script: '/usr/bin/docker images --list'
+- script: '/usr/bin/docker images --list'
 
 - task: Docker@2
   displayName: Pushing Docker Image to DockerHub
