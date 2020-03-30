@@ -18,7 +18,7 @@ steps:
     repository: $(imageName)
     command: build
     Dockerfile: app/Dockerfile
-    tags: pmarishad
+    tags: 'pmarishad'
 
 - task: Docker@2
   inputs:
