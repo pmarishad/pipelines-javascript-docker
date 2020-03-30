@@ -16,7 +16,7 @@ steps:
 - task: Docker@2
   displayName: Build an image
   inputs:
-    repository: 'pipelines-javascript-docker'
+    repository: $(imageName)/NodeImage
     command: build
     Dockerfile: app/Dockerfile
     tags: '$(tag)'
