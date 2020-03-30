@@ -32,5 +32,6 @@ steps:
   displayName: Pushing Docker Image to DockerHub
   inputs:
     containerRegistry: 'DockerHub'
+    repository: '$(imageName)/NodeImage'
     command: 'push'
     tags: '$(tag)'
