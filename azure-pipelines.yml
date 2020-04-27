@@ -6,7 +6,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'on-premise'
+  name: 'on-premise'
 
 variables:
   imageName: 'pmarishad'
