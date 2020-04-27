@@ -6,7 +6,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'on-premise'
 
 variables:
   imageName: 'pmarishad'
@@ -14,6 +14,7 @@ variables:
 
 # Building the Docker image
 steps:
+- script: hostname
 - task: Docker@2
   displayName: Build an image
   inputs:
@@ -22,31 +23,31 @@ steps:
     Dockerfile: app/Dockerfile
     tags: '$(tag)'
 
-# Login to the Docker Registry
-- task: Docker@2
-  displayName: DockerHub login
-  inputs:
-    containerRegistry: 'DockerHub'
-    command: 'login'
-# - script: '/usr/bin/docker images --list'
+# # Login to the Docker Registry
+# - task: Docker@2
+#   displayName: DockerHub login
+#   inputs:
+#     containerRegistry: 'DockerHub'
+#     command: 'login'
+# # - script: '/usr/bin/docker images --list'
 
-# Pushing the image to Docker Registry
-- task: Docker@2
-  displayName: Pushing Docker Image to DockerHub
-  inputs:
-    containerRegistry: 'DockerHub'
-    repository: '$(imageName)/nodeimage'
-    command: 'push'
-    tags: '$(tag)'
+# # Pushing the image to Docker Registry
+# - task: Docker@2
+#   displayName: Pushing Docker Image to DockerHub
+#   inputs:
+#     containerRegistry: 'DockerHub'
+#     repository: '$(imageName)/nodeimage'
+#     command: 'push'
+#     tags: '$(tag)'
 
-# Pushing the image to ECR
-- task: ECRPushImage@1
-  displayName: Pushing Docker Image to AWS ECR
-  inputs:
-    awsCredentials: 'AwsECR'
-    regionName: 'ap-south-1'
-    imageSource: 'imagename'
-    sourceImageName: '$(imageName)/nodeimage'
-    sourceImageTag: '$(tag)'
-    repositoryName: 'pmarishad'
-    pushTag: '$(tag)'
+# # Pushing the image to ECR
+# - task: ECRPushImage@1
+#   displayName: Pushing Docker Image to AWS ECR
+#   inputs:
+#     awsCredentials: 'AwsECR'
+#     regionName: 'ap-south-1'
+#     imageSource: 'imagename'
+#     sourceImageName: '$(imageName)/nodeimage'
+#     sourceImageTag: '$(tag)'
+#     repositoryName: 'pmarishad'
+#     pushTag: '$(tag)'
