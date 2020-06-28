@@ -31,6 +31,6 @@ steps:
     awsCredentials: 'AwsECR'
     regionName: 'ap-south-1'
     imageSource: 'imagename'
-    sourceImageId: '$(imageName)/nodeimage'
+    sourceImageName: '$(imageName)/nodeimage'
     repositoryName: 'ado-approval-test'
     autoCreateRepository: true
