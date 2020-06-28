@@ -42,4 +42,5 @@ stages:
             sourceImageName: $(image_name)
             sourceImageTag: $(image_tag)
             repositoryName: 'ado-approval-test'
+            pushTag: nodeapp-$(image_tag)
             autoCreateRepository: true
