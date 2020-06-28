@@ -32,14 +32,14 @@ stages:
             Dockerfile: app/Dockerfile
             tags: $(image_tag)
 
-# # Pushing the image to ECR
-# - task: ECRPushImage@1
-#   displayName: Pushing Docker Image to AWS ECR
-#   inputs:
-#     awsCredentials: 'AwsECR'
-#     regionName: 'ap-south-1'
-#     imageSource: 'imagename'
-#     sourceImageName: '$(imageName)/nodeimage'
-#     sourceImageTag: '$(tag)'
-#     repositoryName: 'ado-approval-test'
-#     autoCreateRepository: true
+        # Pushing the image to ECR
+        - task: ECRPushImage@1
+          displayName: Pushing Docker Image to AWS ECR
+          inputs:
+            awsCredentials: 'AwsECR'
+            regionName: 'ap-south-1'
+            imageSource: 'imagename'
+            sourceImageName: $(image_name)
+            sourceImageTag: $(image_tag)
+            repositoryName: 'ado-approval-test'
+            autoCreateRepository: true
