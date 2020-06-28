@@ -1,0 +1,5 @@
+variables:
+  - name: image_name
+    value: test/sampleapp
+  - name: image_tag
+    value: 1.1.1
