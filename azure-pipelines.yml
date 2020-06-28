@@ -6,32 +6,41 @@ trigger:
 - master
 - feature/*
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+resources:
+  - repo: self
 
+# Define Variables From Variable Group
 variables:
-  imageName: 'pmarishad'
-  tag: 'pilot'
+  - group: ado-testing-vars
 
 # Building the Docker image
-steps:
+stages:
+  - stage: Dev
+    displayName: Running in Dev Environment
+    pool:
+      vmImage: 'Ubuntu-16.04'
 
-- task: Docker@2
-  displayName: Build an image
-  inputs:
-    repository: '$(imageName)/nodeimage'
-    command: build
-    Dockerfile: app/Dockerfile
-    tags: '$(tag)'
+    jobs:
+      - job: DevJob
+        displayName: DevJob Running in Dev Environment
+        steps:
+        - task: Docker@2
+          displayName: Build an image
+          inputs:
+            repository: $(image_name)
+            command: build
+            Dockerfile: app/Dockerfile
+            tags: $(image_tag)
 
-# Pushing the image to ECR
-- task: ECRPushImage@1
-  displayName: Pushing Docker Image to AWS ECR
-  inputs:
-    awsCredentials: 'AwsECR'
-    regionName: 'ap-south-1'
-    imageSource: 'imagename'
-    sourceImageName: '$(imageName)/nodeimage'
-    sourceImageTag: '$(tag)'
-    repositoryName: 'ado-approval-test'
-    autoCreateRepository: true
+        # Pushing the image to ECR
+        - task: ECRPushImage@1
+          displayName: Pushing Docker Image to AWS ECR
+          inputs:
+            awsCredentials: 'AwsECR'
+            regionName: 'ap-south-1'
+            imageSource: 'imagename'
+            sourceImageName: $(image_name)
+            sourceImageTag: $(image_tag)
+            repositoryName: 'ado-approval-test'
+            pushTag: nodeapp-$(image_tag)
+            autoCreateRepository: true
