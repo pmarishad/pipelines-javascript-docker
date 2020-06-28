@@ -32,5 +32,6 @@ steps:
     regionName: 'ap-south-1'
     imageSource: 'imagename'
     sourceImageName: '$(imageName)/nodeimage'
+    sourceImageTag: '$(tag)'
     repositoryName: 'ado-approval-test'
     autoCreateRepository: true
