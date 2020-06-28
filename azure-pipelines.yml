@@ -9,28 +9,28 @@ trigger:
 resources:
   - repo: self
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
+# Define Variables From Variable Group
 variables:
   - group: ado-testing-vars
-  # - name: image_name
-  #   value: 'pmarishad/nodeapp'
-  # - name: image_tag
-  #   value: '1.4.0'
-  # imageName: 'pmarishad'
-  # tag: 'pilot'
 
 # Building the Docker image
-steps:
+stages:
+  - stage: Dev
+    displayName: Running in Dev Environment
+    pool:
+      vmImage: 'Ubuntu-16.04'
 
-- task: Docker@2
-  displayName: Build an image
-  inputs:
-    repository: $(image_name)
-    command: build
-    Dockerfile: app/Dockerfile
-    tags: $(image_tag)
+    jobs:
+      - job: DevJob
+        displayName: DevJob Running in Dev Environment
+        steps:
+        - task: Docker@2
+          displayName: Build an image
+          inputs:
+            repository: $(image_name)
+            command: build
+            Dockerfile: app/Dockerfile
+            tags: $(image_tag)
 
 # # Pushing the image to ECR
 # - task: ECRPushImage@1
