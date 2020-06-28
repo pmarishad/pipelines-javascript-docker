@@ -6,12 +6,19 @@ trigger:
 - master
 - feature/*
 
+resources:
+  - repo: self
+
 pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'pmarishad'
-  tag: 'pilot'
+  - name: image_name
+    value: 'pmarishad/nodeapp'
+  - name: image_tag
+    value: '1.4.0'
+  # imageName: 'pmarishad'
+  # tag: 'pilot'
 
 # Building the Docker image
 steps:
@@ -19,19 +26,19 @@ steps:
 - task: Docker@2
   displayName: Build an image
   inputs:
-    repository: '$(imageName)/nodeimage'
+    repository: $(image_name)
     command: build
     Dockerfile: app/Dockerfile
-    tags: '$(tag)'
+    tags: $(image_tag)
 
-# Pushing the image to ECR
-- task: ECRPushImage@1
-  displayName: Pushing Docker Image to AWS ECR
-  inputs:
-    awsCredentials: 'AwsECR'
-    regionName: 'ap-south-1'
-    imageSource: 'imagename'
-    sourceImageName: '$(imageName)/nodeimage'
-    sourceImageTag: '$(tag)'
-    repositoryName: 'ado-approval-test'
-    autoCreateRepository: true
+# # Pushing the image to ECR
+# - task: ECRPushImage@1
+#   displayName: Pushing Docker Image to AWS ECR
+#   inputs:
+#     awsCredentials: 'AwsECR'
+#     regionName: 'ap-south-1'
+#     imageSource: 'imagename'
+#     sourceImageName: '$(imageName)/nodeimage'
+#     sourceImageTag: '$(tag)'
+#     repositoryName: 'ado-approval-test'
+#     autoCreateRepository: true
