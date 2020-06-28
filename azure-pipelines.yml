@@ -13,10 +13,11 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  - name: image_name
-    value: 'pmarishad/nodeapp'
-  - name: image_tag
-    value: '1.4.0'
+  - group: ado-testing-vars
+  # - name: image_name
+  #   value: 'pmarishad/nodeapp'
+  # - name: image_tag
+  #   value: '1.4.0'
   # imageName: 'pmarishad'
   # tag: 'pilot'
 
